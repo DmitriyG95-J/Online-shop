@@ -51,7 +51,7 @@ public class User {
     private List<Order> userOrders = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.REMOVE)
-    private Basket basket;
+    private Bucket bucket;
 
 
     @Enumerated(EnumType.STRING)

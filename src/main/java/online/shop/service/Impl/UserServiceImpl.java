@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final MailServiceImpl mailService;
 
     @Override
     @Transactional
@@ -59,22 +60,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    @Override
-    public void registerUser(RegisterDTO registerDTO, HttpServletRequest request) throws Exception {
-        if (userRepository.findByEmail(registerDTO.getEmail()).isPresent()) {
-            throw new Exception("User already exist");
-        }
-        MailService mailService = new MailServiceImpl();
-        User user = new User();
-        user.setEmail(registerDTO.getEmail());
-        user.setName(registerDTO.getName());
-        user.setSurname(registerDTO.getSurname());
-        user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
-        user.setIsEmailVerified(Boolean.FALSE);
-        userRepository.save(user);
 
-        mailService.sendUserVerificationMail(user, request);
-    }
 
     @Override
     public List<UserDTO> getAll() {

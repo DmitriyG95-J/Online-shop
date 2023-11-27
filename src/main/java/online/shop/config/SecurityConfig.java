@@ -24,7 +24,8 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
         http.authorizeRequests()
                 .antMatchers("/ws").permitAll()
                 .antMatchers("/users").hasAnyAuthority(Role.ADMIN.name(), Role.MANAGER.name())
-//                .antMatchers("/users/new").hasAuthority(Role.ADMIN.name())
+                .antMatchers("/users/new").hasAuthority(Role.ADMIN.name())
+                .antMatchers("/register").permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
@@ -45,45 +46,4 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user = (UserDetails) User.builder()
-//                .name("name")
-//                .password(passwordEncoder().encode("password"))
-//                .role(Role.CLIENT)
-//                .build();
-//
-//        // Add more users if needed
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
 }
-//@Configuration
-//@EnableWebSecurity
-//public class SecurityConfig {
-//
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests(requests -> requests
-//                        .requestMatchers("/vertretungsplan").hasAnyRole("ADMIN", "MANAGER", "CLIENT")
-//                        .anyRequest().authenticated()
-//                )
-//                .formLogin(form -> form
-//                        .loginPage("/login")
-//                        .permitAll()
-//                )
-//                .logout(LogoutConfigurer::permitAll);
-//
-//        return http.build();
-//    }
-//
-//
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-//
-//
-//
-//}

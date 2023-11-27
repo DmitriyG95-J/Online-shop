@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @Table(name = "baskets")
-public class Basket {
+public class Bucket {
     private static final String SEQ_NAME = "basket_seq";
 
     @Id

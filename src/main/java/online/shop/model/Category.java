@@ -1,25 +1,51 @@
 package online.shop.model;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+import java.util.List;
+
 @Entity
-@NoArgsConstructor
-@Builder
-@AllArgsConstructor
 @Table(name = "categories")
+@Data
+@NoArgsConstructor
 public class Category {
-    private static final String SEQ_NAME = "category_seq";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_NAME)
-    @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "name")
+    private String name;
+
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
+
+    public Category(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Category(String name) {
+        this.name = name;
+    }
+
+    @JsonIgnore
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

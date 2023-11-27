@@ -17,6 +17,6 @@ public interface UserService extends UserDetailsService {
 
     void save(User user);
 
-    void registerUser(RegisterDTO registerDTO, HttpServletRequest request) throws Exception;
+    ;
 
 }

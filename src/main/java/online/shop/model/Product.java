@@ -9,30 +9,31 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Data
 @Entity
-@NoArgsConstructor
-@Builder
-@AllArgsConstructor
 @Table(name = "products")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
-    private static final String SEQ_NAME = "product_seq";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_NAME)
-    @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "title")
     private String title;
 
+    @Column(name = "price")
     private BigDecimal price;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "products_categories",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private List<Category> categories;
 
-    private Boolean isAvailable;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
-    private Boolean archive;
+    public Product(String title, BigDecimal price, Category category) {
+        this.title = title;
+        this.price = price;
+        this.category = category;
+    }
 }

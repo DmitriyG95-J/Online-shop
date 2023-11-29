@@ -1,7 +1,6 @@
 package online.shop.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
 import online.shop.dto.CartDTO;
 import online.shop.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/cart")
-@Api(description = "Контроллер для корзины")
+//Контроллер для корзины
 public class CartController {
 
     private final CartService cartService;
@@ -20,23 +19,23 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @GetMapping
+    @GetMapping("/get")
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Получить корзину со всеми товарами")
+    //Получить корзину со всеми товарами
     public CartDTO find() {
         return cartService.find();
     }
 
-    @PutMapping
+    @PutMapping("/add")
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Добавить товар в корзину")
+    //Добавить товар в корзину
     public void add(@RequestParam("productId") Long productId) {
         cartService.add(productId);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/clear")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @ApiOperation(value = "Очистить корзину")
+    //Очистить корзину
     public void delete() {
         cartService.delete();
     }

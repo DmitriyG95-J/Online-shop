@@ -6,7 +6,7 @@ import online.shop.model.User;
 import javax.servlet.http.HttpServletRequest;
 
 public interface AuthorizeService {
-    boolean login(User user);
+    boolean login(String name, String password);
 
     void registerUser(RegisterDTO registerDTO, HttpServletRequest request) throws Exception;
 

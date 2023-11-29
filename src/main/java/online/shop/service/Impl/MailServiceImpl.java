@@ -54,13 +54,12 @@ public class MailServiceImpl implements MailService {
     }
 
     private String generateVerificationLink(User user, HttpServletRequest request) {
-        String link = UrlPathUtility.getSiteUrl(request) + "/verify?email=@EMAIL@&token=@TOKEN@";
-        link = link.replace("@EMAIL@", user.getEmail());
-        return link;
+        UrlPathUtility urlPathUtility = new UrlPathUtility();
+        return urlPathUtility.getSiteUrl(request) + "/verify?email=" + user.getEmail();
     }
-    public class UrlPathUtility {
 
-        public static String getSiteUrl(HttpServletRequest request) {
+    public static class UrlPathUtility {
+        public String getSiteUrl(HttpServletRequest request) {
             String siteUrl = request.getRequestURL().toString();
             return siteUrl.replace(request.getServletPath(), "");
         }

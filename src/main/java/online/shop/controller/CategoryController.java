@@ -1,7 +1,6 @@
 package online.shop.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
 import online.shop.dto.CategoryDTO;
 import online.shop.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/category")
-@Api(description = "Контроллер для категорий товаров")
+//Контроллер для категорий товаров
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -25,9 +24,9 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping
+    @GetMapping("/getcategory")
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Получить все категории товаров")
+    //Получить все категории товаров
     public List<CategoryDTO> findAll() {
         return categoryService.findAll();
     }

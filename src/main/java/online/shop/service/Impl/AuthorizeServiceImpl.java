@@ -1,14 +1,15 @@
 package online.shop.service.Impl;
 
+import online.shop.component.Cart;
 import online.shop.dto.RegisterDTO;
 import online.shop.model.User;
 import online.shop.repository.UserRepository;
 import online.shop.service.AuthorizeService;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 @Service
 public class AuthorizeServiceImpl implements AuthorizeService {
@@ -24,11 +25,15 @@ public class AuthorizeServiceImpl implements AuthorizeService {
     }
 
     @Override
-    public boolean login(User user) {
-        if (!user.getIsActive()) {
-            return false;
-        } else {return true;}
-
+    public boolean login(String name, String password) {
+        Optional<User> optionalUser = userRepository.findByName(name);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (passwordEncoder.matches(password, user.getPassword()) && user.getIsActive()) {
+                return true;
+            }
+        }
+        return false;
     }
     @Override
     public void registerUser(RegisterDTO registerDTO, HttpServletRequest request) throws Exception {
@@ -37,6 +42,7 @@ public class AuthorizeServiceImpl implements AuthorizeService {
         }
 
         User user = new User();
+        Cart cart = new Cart();
         user.setEmail(registerDTO.getEmail());
         user.setName(registerDTO.getName());
         user.setSurname(registerDTO.getSurname());

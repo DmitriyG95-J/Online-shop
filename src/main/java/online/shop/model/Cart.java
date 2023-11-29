@@ -14,9 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-@Table(name = "baskets")
-public class Bucket {
-    private static final String SEQ_NAME = "basket_seq";
+@Table(name = "carts")
+public class Cart {
+    private static final String SEQ_NAME = "cart_seq";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_NAME)
@@ -28,8 +28,8 @@ public class Bucket {
     private User user;
 
     @ManyToMany
-    @JoinTable(name = "baskets_products",
-            joinColumns = @JoinColumn(name = "basket_id"),
+    @JoinTable(name = "cart_products",
+            joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> product;
 }

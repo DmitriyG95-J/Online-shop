@@ -2,9 +2,12 @@ package online.shop.config;
 
 import online.shop.model.Role;
 import online.shop.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,12 +24,12 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/ws").permitAll()
+        http
+                .authorizeRequests()
                 .antMatchers("/users").hasAnyAuthority(Role.ADMIN.name(), Role.MANAGER.name())
                 .antMatchers("/users/new").hasAuthority(Role.ADMIN.name())
-                .antMatchers("/register").permitAll()
-                .anyRequest().permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/authorize/register").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -45,5 +48,4 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

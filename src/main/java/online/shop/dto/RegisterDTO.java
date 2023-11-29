@@ -17,7 +17,7 @@ public class RegisterDTO {
     private String surname;
 
     @NotBlank
-    @Size(min = 8, max = 24, message = "Пароль должен быть больше 8 символов, но меньше 24")
+    @Size(min = 1, max = 24, message = "Пароль должен быть больше 8 символов, но меньше 24")
     private String password;
 
     @Email

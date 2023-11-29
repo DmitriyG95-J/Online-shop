@@ -11,7 +11,7 @@ import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLAS
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
 
 @Component
-@Scope(scopeName = SCOPE_SESSION, proxyMode = TARGET_CLASS)
+@Scope(scopeName = SCOPE_SESSION, proxyMode = TARGET_CLASS)//может лучше синглтон?
 public class Cart {
 
     private Map<Long, Integer> products; // id и количество товаров

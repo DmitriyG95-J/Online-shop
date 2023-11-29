@@ -47,11 +47,8 @@ public class User {
     @Column(name = "is_del")
     private Boolean isDeleted;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Order> userOrders = new ArrayList<>();
-
     @OneToOne(cascade = CascadeType.REMOVE)
-    private Bucket bucket;
+    private Cart cart;
 
 
     @Enumerated(EnumType.STRING)

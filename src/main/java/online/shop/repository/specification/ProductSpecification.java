@@ -14,7 +14,6 @@ import org.springframework.util.MultiValueMap;
  */
 public class ProductSpecification {
 
-    // Передаём значение параметра, и далее с помощью criteriaBuilder создаём Спецификацию
     private static Specification<Product> priceGreaterOrEqualsThan(int minPrice) {
         Specification<Product> spec = (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice);
         return spec;

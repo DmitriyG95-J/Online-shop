@@ -5,41 +5,48 @@ import lombok.AllArgsConstructor;
 import online.shop.dto.RegisterDTO;
 import online.shop.dto.UserDTO;
 import online.shop.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.List;
 
-@Controller
-@RequestMapping("/users")
+@RestController
+@RequestMapping("/api/v1/users")
 @AllArgsConstructor
 public class UserController {
-   private final UserService userService;
 
-   @GetMapping
-   public String userList(Model model) {
-       model.addAttribute("users", userService.getAll());
-       return "userList";
-   }
+    private final UserService userService;
 
-   @GetMapping("/new")
-    public String newUser(Model model) {
-       model.addAttribute("user", new UserDTO());
-       return "user";
-   }
+    @GetMapping("/getAllUsers")
+    @ResponseStatus(HttpStatus.OK)
+    //Получить список всех пользователей
+    public List<UserDTO> getAllUsers() {
+        return userService.getAll();
+    }
 
-   @PostMapping("/new")
-    public String saveUser(UserDTO dto, Model model) {
-       if (userService.save(dto)) {
-           return "redirect:/users";
-       } else {
-           model.addAttribute("user", dto);
-           return "user";
-       }
-   }
+    @GetMapping("/new")
+    @ResponseStatus(HttpStatus.OK)
+    //Создать нового пользователя
+    public UserDTO newUser() {
+        return new UserDTO();
+    }
 
-
+    @PostMapping("/new")
+    @ResponseStatus(HttpStatus.CREATED)
+    //Сохранить пользователя
+    public ResponseEntity<Void> saveUser(@RequestBody @Valid UserDTO userDto) {
+        if (userService.save(userDto)) {
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
 }
+
+
+

@@ -44,8 +44,8 @@ public class User {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @Column(name = "is_del")
-    private Boolean isDeleted;
+//    @Column(name = "is_del")
+//    private Boolean isDeleted;
 
     @OneToOne(cascade = CascadeType.REMOVE)
     private Cart cart;

@@ -29,12 +29,6 @@ public class ProductDTO {
     @NotNull
     private Category category;
 
-    public ProductDTO(String title, BigDecimal price, Category category) {
-        this.title = title;
-        this.price = price;
-        this.category = category;
-    }
-
     public static ProductDTO valueOf(Product product) {
         return new ProductDTO(
                 product.getId(),

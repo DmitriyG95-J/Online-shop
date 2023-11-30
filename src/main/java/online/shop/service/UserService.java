@@ -12,11 +12,4 @@ public interface UserService extends UserDetailsService {
     boolean save(UserDTO userDTO);
 
     List<UserDTO> getAll();
-
-    UserDTO createUser(UserDTO userCreateReqDTO);
-
-    void save(User user);
-
-    ;
-
 }

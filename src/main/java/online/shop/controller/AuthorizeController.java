@@ -1,10 +1,13 @@
 package online.shop.controller;
 
 import lombok.AllArgsConstructor;
+import online.shop.dto.LoginDTO;
 import online.shop.dto.RegisterDTO;
 import online.shop.service.AuthorizeService;
 import online.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,35 +25,20 @@ public class AuthorizeController {
         this.authorizeService = authorizeService;
     }
 
-    @GetMapping({"", "/"})
-    //Отобразить главную страницу
-    public String index() {
-        return "index";
-    }
-
     @PostMapping("/login")
     // Обработать запрос на вход пользователя в систему (логин)
-    public String login(@RequestParam("name") String name,
-                        @RequestParam("password") String password,
-                        Model model) {
-        if (authorizeService.login(name, password)) {
-            return "redirect:/";
+    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
+        if (authorizeService.login(loginDTO.getName(), loginDTO.getPassword())) {
+            return ResponseEntity.ok("Login successful");
         } else {
-            model.addAttribute("error", "Invalid credentials");
-            return "/login";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
-    }
-
-    @RequestMapping("/login-error")
-    //Обработать ошибку входа пользователя в систему (логин)
-    public String loginError(Model model) {
-        model.addAttribute("loginError", true);
-        return "login";
     }
 
     @PostMapping("/register")
     //Зарегистрировать нового пользователя
-    public void registerUser(@RequestBody RegisterDTO registerDTO, HttpServletRequest request) throws Exception {
+    public ResponseEntity<String> registerUser(@RequestBody RegisterDTO registerDTO, HttpServletRequest request) throws Exception {
         authorizeService.registerUser(registerDTO, request);
+        return ResponseEntity.ok("User registered successfully");
     }
 }

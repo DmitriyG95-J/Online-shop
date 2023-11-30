@@ -19,8 +19,4 @@ public class CategoryDTO {
                 category.getName()
         );
     }
-
-    public Category mapToCategory() {
-        return new Category(id, name);
-    }
 }

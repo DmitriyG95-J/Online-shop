@@ -29,13 +29,6 @@ public class UserController {
         return userService.getAll();
     }
 
-    @GetMapping("/new")
-    @ResponseStatus(HttpStatus.OK)
-    //Создать нового пользователя
-    public UserDTO newUser() {
-        return new UserDTO();
-    }
-
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     //Сохранить пользователя

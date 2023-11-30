@@ -48,18 +48,11 @@ public class UserServiceImpl implements UserService {
                 .archive(false)
                 .dateCreate(currentDateTime)
                 .isActive(true)
-                .isDeleted(false)
                 .isEmailVerified(false)
                 .build();
         userRepository.save(user);
         return true;
     }
-
-    @Override
-    public void save(User user) {
-        userRepository.save(user);
-    }
-
 
 
     @Override
@@ -74,11 +67,6 @@ public class UserServiceImpl implements UserService {
                 .username(user.getName())
                 .email(user.getEmail())
                 .build();
-    }
-
-    @Override
-    public UserDTO createUser(UserDTO userCreateReqDTO) {
-        return null;
     }
 
     @Override
